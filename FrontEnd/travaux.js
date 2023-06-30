@@ -36,7 +36,7 @@ async function createWorks() {
 
     const boutonObjet = document.querySelector(".btn-objet");
 
-    boutonObjet.addEventListener("click", function () {
+        boutonObjet.addEventListener("click", function () {
             const travauxObjets = travaux.filter(function (travail) {
                 return travail.categoryId === 1;
             });
