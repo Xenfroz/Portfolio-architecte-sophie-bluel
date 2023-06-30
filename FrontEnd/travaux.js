@@ -34,7 +34,7 @@ async function createWorks() {
 
     });
 
-    const boutonObjet = document.querySelector(".btn-objet");
+     const boutonObjet = document.querySelector(".btn-objet");
 
         boutonObjet.addEventListener("click", function () {
             const travauxObjets = travaux.filter(function (travail) {
