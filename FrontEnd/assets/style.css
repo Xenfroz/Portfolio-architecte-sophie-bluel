@@ -258,3 +258,12 @@ footer nav ul {
 	color: black;
 	text-align: center;
 }
+
+#erreur {
+	padding-top: 5%;
+	color: red;
+}
+
+#erreur p {
+	text-align: center;
+}
