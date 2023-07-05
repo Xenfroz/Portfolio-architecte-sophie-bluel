@@ -22,6 +22,7 @@ btnConnexion.addEventListener('click', async function (e) {
     });
     const connexionInfo = await reponse.json();
     if (connexionInfo.userId === 1) {
+        window.localStorage.setItem("token", connexionInfo.token);
         window.location.href = "/Frontend/index.html"
     } else {
         const contenantErreur = document.querySelector("#erreur");

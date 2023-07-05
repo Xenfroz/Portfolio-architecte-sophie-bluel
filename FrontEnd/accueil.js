@@ -67,3 +67,12 @@ async function createWorks() {
     });
 
 }
+
+function displayAdmin() {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+        document.getElementById("edition").style.display = "flex";
+    }
+}
+
+displayAdmin();
