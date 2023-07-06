@@ -42,17 +42,11 @@ async function createWorks() {
             });
             document.querySelector(".gallery").innerHTML = '';
             travauxObjets.forEach(travail => {
-                const figure = document.createElement('figure');
-                projetGalerie.appendChild(figure);
-                const image = document.createElement('img');
-                image.src = travail.imageUrl;
-                figure.appendChild(image);
-                const titre = document.createElement('figcaption');
-                titre.innerText = travail.title;
-                figure.appendChild(titre);
+                affichageProjet();
             });
 
         });
+
     
     const boutonAppartement = document.querySelector(".btn-appartement");
 
@@ -62,14 +56,7 @@ async function createWorks() {
             });
             document.querySelector(".gallery").innerHTML = '';
             travauxAppartement.forEach(travail => {
-                const figure = document.createElement('figure');
-                projetGalerie.appendChild(figure);
-                const image = document.createElement('img');
-                image.src = travail.imageUrl;
-                figure.appendChild(image);
-                const titre = document.createElement('figcaption');
-                titre.innerText = travail.title;
-                figure.appendChild(titre);
+                affichageProjet();
             });
         });
 
@@ -81,16 +68,20 @@ async function createWorks() {
             });
             document.querySelector(".gallery").innerHTML = '';
             travauxHotelRestaurant.forEach(travail => {
-                const figure = document.createElement('figure');
-                projetGalerie.appendChild(figure);
-                const image = document.createElement('img');
-                image.src = travail.imageUrl;
-                figure.appendChild(image);
-                const titre = document.createElement('figcaption');
-                titre.innerText = travail.title;
-                figure.appendChild(titre);
+                affichageProjet();
             });
         });
+
+        function affichageProjet() {
+            const figure = document.createElement('figure');
+            projetGalerie.appendChild(figure);
+            const image = document.createElement('img');
+            image.src = travail.imageUrl;
+            figure.appendChild(image);
+            const titre = document.createElement('figcaption');
+            titre.innerText = travail.title;
+            figure.appendChild(titre);
+        };
 
 }
 
