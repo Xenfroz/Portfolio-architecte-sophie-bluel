@@ -74,7 +74,15 @@ function displayAdmin() {
         document.getElementById("edition").style.display = "flex";
         document.getElementById("modifier").style.display = "flex";
         document.getElementById("buttons").style.display = "none";
-        
+        document.querySelector(".login-logout").innerText = 'logout';
+        const btnLogout = document.querySelector(".login-logout");
+
+        btnLogout.addEventListener("click", function () {
+            document.getElementById("edition").style.display = "none";
+            document.getElementById("modifier").style.display = "none";
+            document.getElementById("buttons").style.display = "flex";
+            document.querySelector(".login-logout").innerText = 'login';
+        })
     }
 }
 
