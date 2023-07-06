@@ -72,6 +72,9 @@ function displayAdmin() {
     const token = window.localStorage.getItem("token");
     if (token) {
         document.getElementById("edition").style.display = "flex";
+        document.getElementById("modifier").style.display = "flex";
+        document.getElementById("buttons").style.display = "none";
+        
     }
 }
 
