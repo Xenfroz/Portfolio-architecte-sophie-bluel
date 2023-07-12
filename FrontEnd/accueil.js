@@ -16,6 +16,23 @@ async function createWorks() {
         figure.appendChild(titre);
     });
 
+    const galeriePhoto = document.querySelector(".galerie-photo");
+    travaux.forEach(travail => {
+        const galerieElement = document.createElement('figure');
+        galeriePhoto.appendChild(galerieElement);
+        const photo = document.createElement('img');
+        photo.src = travail.imageUrl;
+        galerieElement.appendChild(photo);
+        const photoModifier = document.createElement('a');
+        photoModifier.innerHTML = "éditer";
+        galerieElement.appendChild(photoModifier);
+        const boutonSuppression = document.createElement('a');
+        boutonSuppression.innerHTML = '<i class="fa-solid fa-trash-can fa-xs"></i>';
+        boutonSuppression.setAttribute('href','#');
+        boutonSuppression.classList.add("bouton-suppression");
+        galerieElement.appendChild(boutonSuppression);
+    });
+
     function affichageTravaux (projets) {
         projets.forEach(travail => {
             const figure = document.createElement('figure');
@@ -82,8 +99,20 @@ function displayAdmin() {
             document.getElementById("modifier").style.display = "none";
             document.getElementById("buttons").style.display = "flex";
             document.querySelector(".login-logout").innerText = 'login';
+            window.localStorage.clear;
+            window.location.href = "index.html";
         })
     }
 }
 
 displayAdmin();
+
+const openModal = function (e) {
+    e.preventDefault()
+    const target = document.querySelector(e.target.getAttribute('href'))
+    target.style.display = null
+}
+
+const boutonModal = document.querySelector(".js-modal");
+
+boutonModal.addEventListener("click", openModal);
