@@ -161,7 +161,7 @@ li:hover {
 	margin-bottom: 0.5em;
 }
 
-#modifier {
+.modifier {
 	display: none;
 	margin-left: 10%;
 	text-decoration: none;
@@ -352,6 +352,12 @@ footer nav ul {
 	align-items: center;
 }
 
+.galerie-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 .exit-button {
 	text-decoration: none;
 	color: black;
@@ -376,7 +382,6 @@ footer nav ul {
 .modal-wrapper input[type="submit"] {
 	height: 36px;
 	border: none;
-	margin: 0;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	width: 237px;
 	margin: 2em 0;
@@ -418,4 +423,85 @@ footer nav ul {
 	height: 17px;
 	text-decoration: none;
 	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.ajout-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.bouton-photo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: #E8F1F6;
+	width: 420px;
+	height: 169px;
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+
+.ajout-wrapper i {
+	color: #B9C5CC;
+}
+
+.bouton-photo input[type="submit"] {
+	height: 36px;
+	border: none;
+	margin: 0;
+	width: 173px;
+	color: #306685;
+	background-color: #CBD6DC;
+	font-family: 'Work Sans';
+	margin-top: 40px;
+	margin-bottom: 10px;
+	font-weight: 500;
+	font-size: 14px;
+}
+
+.bouton-photo p {
+	color: #444444;
+}
+
+.ajout-wrapper input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+.ajout-wrapper label {
+	margin: 2em 0 1em 0;
+}
+
+.ajout-wrapper form {
+	display: flex;
+	flex-direction: column;
+}
+
+.ajout-wrapper select {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	background-color: white;
+}
+
+.ligne {
+	border-bottom: 1px solid #B3B3B3;
+	margin-top: 2.5em;
+}
+
+#bouton-valider {
+	align-self: center;
+}
+
+.return-button {
+	display: none;
+	text-decoration: none;
+	color: black;
+	position: relative;
+	right: 280px;
+	top: 30px;
 }
