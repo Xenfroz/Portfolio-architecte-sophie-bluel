@@ -63,7 +63,7 @@ async function createWorks() {
                     formData.append('image', img.files[0]);
                     formData.append('titre', titre.value);
                     formData.append('categorie', categorie.value);
-                    console.log(formdata)
+                    console.log(formData)
                     const reponse = await fetch ("http://localhost:5678/api/works", {
                         method: 'POST',
                         headers: {
