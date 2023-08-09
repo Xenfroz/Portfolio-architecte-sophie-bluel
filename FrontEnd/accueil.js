@@ -50,6 +50,28 @@ async function createWorks() {
                 document.querySelector(".galerie-wrapper").style.display = "none"
                 document.querySelector(".ajout-wrapper").style.display = "flex";
                 document.querySelector(".return-button").style.display = "flex";
+
+                const btnValider = document.getElementById('bouton-valider');
+
+                btnValider.addEventListener('click', async function (e) {
+                    e.preventDefault();
+                    const token = window.localStorage.getItem("token");
+                    const image = document.getElementById('img');
+                    const titre = document.getElementById('titre');
+                    const categorie = document.getElementById('categorie');
+                    const formData = new FormData();
+                    formData.append('image', img.files[0]);
+                    formData.append('titre', titre.value);
+                    formData.append('categorie', categorie.value);
+                    console.log(formdata)
+                    const reponse = await fetch ("http://localhost:5678/api/works", {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer '+token
+                        },
+                        body: formData
+                    })
+                })
             })
             const boutonReturn = document.querySelector(".return-button");
             boutonReturn.addEventListener('click', function(){
