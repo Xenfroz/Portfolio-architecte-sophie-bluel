@@ -45,7 +45,10 @@ async function createWorks() {
                 })
                 galerieElement.innerHTML = ""
             })
-            const boutonAjout = document.getElementById("ajout-button");
+            
+        });
+    };
+    const boutonAjout = document.getElementById("ajout-button");
             boutonAjout.addEventListener('click', function() {
                 document.querySelector(".galerie-wrapper").style.display = "none"
                 document.querySelector(".ajout-wrapper").style.display = "flex";
@@ -64,13 +67,15 @@ async function createWorks() {
                     formData.append('titre', titre.value);
                     formData.append('categorie', categorie.value);
                     console.log(formData)
-                    const reponse = await fetch ("http://localhost:5678/api/works", {
+                    const reponse2 = await fetch ("http://localhost:5678/api/works", {
                         method: 'POST',
                         headers: {
+                            'Content-type': 'application/json',
                             'Authorization': 'Bearer '+token
                         },
                         body: formData
                     })
+                    console.log(reponse2);
                 })
             })
             const boutonReturn = document.querySelector(".return-button");
@@ -79,8 +84,6 @@ async function createWorks() {
                 document.querySelector(".ajout-wrapper").style.display = "none";
                 document.querySelector(".return-button").style.display = "none";
             })
-        });
-    };
 
     affichageGalerie();
 
