@@ -64,13 +64,12 @@ async function createWorks() {
                     const categorie = document.getElementById('categorie');
                     const formData = new FormData();
                     formData.append('image', img.files[0]);
-                    formData.append('titre', titre.value);
-                    formData.append('categorie', categorie.value);
+                    formData.append('title', titre.value);
+                    formData.append('category', categorie.value);
                     console.log(formData)
                     const reponse2 = await fetch ("http://localhost:5678/api/works", {
                         method: 'POST',
                         headers: {
-                            'Content-type': 'application/json',
                             'Authorization': 'Bearer '+token
                         },
                         body: formData
