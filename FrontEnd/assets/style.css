@@ -447,22 +447,31 @@ footer nav ul {
 	color: #B9C5CC;
 }
 
-.bouton-photo input[type="submit"] {
-	height: 36px;
-	border: none;
-	margin: 0;
-	width: 173px;
-	color: #306685;
-	background-color: #CBD6DC;
-	font-family: 'Work Sans';
-	margin-top: 40px;
-	margin-bottom: 10px;
-	font-weight: 500;
-	font-size: 14px;
-}
-
 .bouton-photo p {
 	color: #444444;
+}
+
+.custom-image {
+	display: flex;
+	height: 36px;
+	width: 173px;
+	font-family: 'Work Sans';
+	color: #306685;
+	border-radius: 50px;
+	background-color: #CBD6DC;
+	justify-content: center;
+	align-items: center;
+	padding: auto;
+}
+
+#imgProjet {
+	display: none;
+}
+
+#preview {
+	display: none;
+	height: 169px;
+	width: 129px;
 }
 
 .ajout-wrapper input {
@@ -495,6 +504,7 @@ footer nav ul {
 
 #bouton-valider {
 	align-self: center;
+	margin-bottom: 1em;
 }
 
 .return-button {

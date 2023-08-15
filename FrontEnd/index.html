@@ -37,9 +37,10 @@
 				<form>
 					<div class="bouton-photo">
 						<i class="fa-regular fa-image fa-2xl"></i>
-						<label for="img" class="custom-image">+ Ajouter photo</label>
-						<input type="file" name="img" id="img" required accept=".jpg, .png">
-						<p>jpg, png : 4mo max</p>
+						<label for="imgProjet" class="custom-image">+ Ajouter photo</label>
+						<input type="file" name="imgProjet" id="imgProjet" required accept=".jpg, .png">
+						<img id="preview" src="#"/>
+						<p class="photo-text">jpg, png : 4mo max</p>
 					</div>
 					<label for="titre">Nom</label>
 					<input type="text" name="titre" id="titre">
@@ -50,6 +51,7 @@
 						<option value="3">Hôtels & restaurants</option>
 					</select>
 					<div class="ligne"></div>
+					<div class="erreur-container"></div>
 					<input id="bouton-valider" type="submit" value="Valider">
 				</form>
 			</div>

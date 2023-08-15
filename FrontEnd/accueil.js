@@ -48,6 +48,19 @@ async function createWorks() {
             
         });
     };
+
+    imgProjet.onchange = evt => {
+        const [file] = imgProjet.files
+        if (file) {
+            document.getElementById("preview").style.display = "flex"
+            preview.src = URL.createObjectURL(file)
+            document.querySelector(".fa-image").style.display = "none"
+            document.querySelector(".custom-image").style.display = "none"
+            document.querySelector(".photo-text").style.display = "none"
+        }
+      }
+
+
     const boutonAjout = document.getElementById("ajout-button");
             boutonAjout.addEventListener('click', function() {
                 document.querySelector(".galerie-wrapper").style.display = "none"
@@ -59,22 +72,43 @@ async function createWorks() {
                 btnValider.addEventListener('click', async function (e) {
                     e.preventDefault();
                     const token = window.localStorage.getItem("token");
-                    const image = document.getElementById('img');
+                    const image = document.getElementById('imgProjet');
                     const titre = document.getElementById('titre');
                     const categorie = document.getElementById('categorie');
-                    const formData = new FormData();
-                    formData.append('image', img.files[0]);
-                    formData.append('title', titre.value);
-                    formData.append('category', categorie.value);
-                    console.log(formData)
-                    const reponse2 = await fetch ("http://localhost:5678/api/works", {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': 'Bearer '+token
-                        },
-                        body: formData
-                    })
-                    console.log(reponse2);
+                    const contenantErreur = document.querySelector(".erreur-container");
+                    if (image === null) {
+                        contenantErreur.innerHTML = "";
+                        const msgErreur = document.createElement('p');
+                        contenantErreur.appendChild(msgErreur);
+                        msgErreur.innerHTML = "Veuillez sélectionner un fichier";
+                    } if (titre === null) {
+                        contenantErreur.innerHTML = "";
+                        const msgErreur = document.createElement('p');
+                        contenantErreur.appendChild(msgErreur);
+                        msgErreur.innerHTML = "Veuillez donner un titre au projet";
+                    } else {
+                        const formData = new FormData();
+                        formData.append('image', image.files[0]);
+                        formData.append('title', titre.value);
+                        formData.append('category', categorie.value);
+                        const reponse2 = await fetch ("http://localhost:5678/api/works", {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': 'Bearer '+token
+                            },
+                            body: formData
+                        })
+                        const newProject = reponse2.json();
+                        const projetGalerie = document.querySelector(".gallery");
+                        const figure = document.createElement('figure');
+                        projetGalerie.appendChild(figure);
+                        const image = document.createElement('img');
+                        image.src = newProject.imageUrl;
+                        figure.appendChild(image);
+                        const titre = document.createElement('figcaption');
+                        titre.innerText = newProject.title;
+                        figure.appendChild(titre);
+                    }
                 })
             })
             const boutonReturn = document.querySelector(".return-button");
