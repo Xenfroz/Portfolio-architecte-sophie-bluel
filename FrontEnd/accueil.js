@@ -30,7 +30,7 @@ async function createWorks() {
             galerieElement.appendChild(photoModifier);
             const boutonSuppression = document.createElement('a');
             boutonSuppression.innerHTML = '<i class="fa-solid fa-trash-can fa-xs"></i>';
-            boutonSuppression.setAttribute('href','');
+            boutonSuppression.setAttribute('href','#');
             boutonSuppression.classList.add("bouton-suppression");
             galerieElement.appendChild(boutonSuppression);
             boutonId = travail.id
