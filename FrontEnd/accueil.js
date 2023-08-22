@@ -160,12 +160,12 @@ btnValider.addEventListener('click', async function (e) {
     const titre = document.getElementById('titre');
     const categorie = document.getElementById('categorie');
     const contenantErreur = document.querySelector(".erreur-container");
-    if (image === null) { //Erreur si pas d'image//
+    if (image.value === '') { //Erreur si pas d'image//
         contenantErreur.innerHTML = "";
         const msgErreur = document.createElement('p');
         contenantErreur.appendChild(msgErreur);
         msgErreur.innerHTML = "Veuillez sélectionner un fichier";
-    } if (titre === null) { //Erreur si pas de titre//
+    } if (titre.value === '') { //Erreur si pas de titre//
         contenantErreur.innerHTML = "";
         const msgErreur = document.createElement('p');
         contenantErreur.appendChild(msgErreur);
@@ -182,6 +182,11 @@ btnValider.addEventListener('click', async function (e) {
             },
             body: formData
         })
+        contenantErreur.innerHTML = "";
+        const msgErreur = document.createElement('p');
+        contenantErreur.appendChild(msgErreur);
+        msgErreur.innerHTML = "Projet créé avec succès";
+
         // const newProject = reponse2.json();
         // const projetGalerie = document.querySelector(".gallery");
         // const figure = document.createElement('figure');
