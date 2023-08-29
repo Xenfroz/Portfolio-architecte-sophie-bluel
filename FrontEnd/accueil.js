@@ -169,7 +169,7 @@ btnValider.addEventListener('click', async function (e) {
         contenantErreur.innerHTML = "";
         const msgErreur = document.createElement('p');
         contenantErreur.appendChild(msgErreur);
-        msgErreur.innerHTML = "Veuillez donner un titre au projet";
+        msgErreur.innerHTML = "Veuillez donner un nom au projet";
     } else {
         const formData = new FormData();
         formData.append('image', image.files[0]);
@@ -183,20 +183,53 @@ btnValider.addEventListener('click', async function (e) {
             body: formData
         })
         contenantErreur.innerHTML = "";
-        const msgErreur = document.createElement('p');
-        contenantErreur.appendChild(msgErreur);
-        msgErreur.innerHTML = "Projet créé avec succès";
 
-        // const newProject = reponse2.json();
-        // const projetGalerie = document.querySelector(".gallery");
-        // const figure = document.createElement('figure');
-        // projetGalerie.appendChild(figure);
-        // const image = document.createElement('img');
-        // image.src = newProject.imageUrl;
-        // figure.appendChild(image);
-        // const titre = document.createElement('figcaption');
-        // titre.innerText = newProject.title;
-        // figure.appendChild(titre);
+        reponseJson = await reponse2.json()
+
+        document.querySelector(".galerie-wrapper").style.display = "flex"
+        document.querySelector(".ajout-wrapper").style.display = "none";
+        document.querySelector(".return-button").style.display = "none";
+
+        const projetGalerie = document.querySelector(".gallery");
+        const figure = document.createElement('figure');
+        projetGalerie.appendChild(figure);
+        const imageGalerie = document.createElement('img');
+        imageGalerie.src = reponseJson.imageUrl;
+        figure.appendChild(imageGalerie);
+        const titreGalerie = document.createElement('figcaption');
+        titreGalerie.innerText = reponseJson.title;
+        figure.appendChild(titreGalerie);
+
+        const galeriePhoto = document.querySelector(".galerie-photo");
+        const galerieElement = document.createElement('figure');
+        galeriePhoto.appendChild(galerieElement);
+        const imageNewProject = document.createElement('img');
+        imageNewProject.src = reponseJson.imageUrl;
+        galerieElement.appendChild(imageNewProject);
+        const titreNewProject = document.createElement('figcaption');
+        titreNewProject.innerText = reponseJson.title;
+        galerieElement.appendChild(titreNewProject);
+        const boutonSuppression = document.createElement('a');
+        boutonSuppression.innerHTML = '<i class="fa-solid fa-trash-can fa-xs"></i>';
+        boutonSuppression.setAttribute('href','#');
+        boutonSuppression.classList.add("bouton-suppression");
+        galerieElement.appendChild(boutonSuppression);
+        boutonId = reponseJson.id
+        boutonSuppression.addEventListener('click', function(e) {
+            e.preventDefault()
+            const token = window.localStorage.getItem("token");
+            const reponseSuppression = fetch ("http://localhost:5678/api/works/"+boutonId, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+token
+                },
+            })
+            galerieElement.innerHTML = ""
+            figure.innerHTML = ""
+        })
+
+
     }
 })
 
@@ -243,3 +276,6 @@ const stopPropagation = function (e) {
 const boutonModal = document.querySelector(".js-modal");
 
 boutonModal.addEventListener("click", openModal);
+
+const exitButton = document.querySelector(".exit-button")
+exitButton.addEventListener("click", closeModal)
