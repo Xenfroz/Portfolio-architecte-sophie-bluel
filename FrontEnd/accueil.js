@@ -160,6 +160,7 @@ btnValider.addEventListener('click', async function (e) {
     const titre = document.getElementById('titre');
     const categorie = document.getElementById('categorie');
     const contenantErreur = document.querySelector(".erreur-container");
+    const maxSize = 4 * 1024 * 1024
     if (image.value === '') { //Erreur si pas d'image//
         contenantErreur.innerHTML = "";
         const msgErreur = document.createElement('p');
@@ -170,6 +171,11 @@ btnValider.addEventListener('click', async function (e) {
         const msgErreur = document.createElement('p');
         contenantErreur.appendChild(msgErreur);
         msgErreur.innerHTML = "Veuillez donner un nom au projet";
+    } if (image.files[0].size > maxSize) {
+        contenantErreur.innerHTML = "";
+        const msgErreur = document.createElement('p');
+        contenantErreur.appendChild(msgErreur);
+        msgErreur.innerHTML = "Image trop volumineuse";
     } else {
         const formData = new FormData();
         formData.append('image', image.files[0]);
@@ -183,6 +189,10 @@ btnValider.addEventListener('click', async function (e) {
             body: formData
         })
         contenantErreur.innerHTML = "";
+
+        console.log(image.files[0])
+        console.log(image.files[0].size)
+        
 
         reponseJson = await reponse2.json()
 
