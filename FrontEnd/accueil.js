@@ -32,12 +32,13 @@ async function createWorks() {
             boutonSuppression.innerHTML = '<i class="fa-solid fa-trash-can fa-xs"></i>';
             boutonSuppression.setAttribute('href','#');
             boutonSuppression.classList.add("bouton-suppression");
+            boutonSuppression.setAttribute('id',travail.id);
+            console.log(boutonSuppression.id)
             galerieElement.appendChild(boutonSuppression);
-            boutonId = travail.id
             boutonSuppression.addEventListener('click', function(e) {
                 e.preventDefault()
                 const token = window.localStorage.getItem("token");
-                const reponseSuppression = fetch ("http://localhost:5678/api/works/"+boutonId, {
+                const reponseSuppression = fetch ("http://localhost:5678/api/works/"+boutonSuppression.id, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -148,6 +149,7 @@ boutonReturn.addEventListener('click', function(){
     document.querySelector(".galerie-wrapper").style.display = "flex"
     document.querySelector(".ajout-wrapper").style.display = "none";
     document.querySelector(".return-button").style.display = "none";
+    closePreview()
 })
 
 //Bouton permettant d'envoyer le projet à l'API//
@@ -189,9 +191,7 @@ btnValider.addEventListener('click', async function (e) {
             body: formData
         })
         contenantErreur.innerHTML = "";
-
-        console.log(image.files[0])
-        console.log(image.files[0].size)
+        closePreview();
         
 
         reponseJson = await reponse2.json()
@@ -217,7 +217,7 @@ btnValider.addEventListener('click', async function (e) {
         imageNewProject.src = reponseJson.imageUrl;
         galerieElement.appendChild(imageNewProject);
         const titreNewProject = document.createElement('figcaption');
-        titreNewProject.innerText = reponseJson.title;
+        titreNewProject.innerText = 'éditer';
         galerieElement.appendChild(titreNewProject);
         const boutonSuppression = document.createElement('a');
         boutonSuppression.innerHTML = '<i class="fa-solid fa-trash-can fa-xs"></i>';
@@ -270,12 +270,20 @@ const openModal = function (e) {
     modal.querySelector('.modal-wrapper').addEventListener('click', stopPropagation)
 }
 
+const closePreview = function(e) {
+    document.getElementById("preview").style.display = "none"
+    document.querySelector(".fa-image").style.display = "flex"
+    document.querySelector(".custom-image").style.display = "flex"
+    document.querySelector(".photo-text").style.display = "flex"
+}
+
 const closeModal = function(e) {
     if (modal === null) return
     e.preventDefault
     modal.style.display = "none"
     modal.removeEventListener('click', closeModal)
     modal.querySelector('.modal-wrapper').removeEventListener('click', stopPropagation)
+    closePreview()
     modal = null
 }
 
