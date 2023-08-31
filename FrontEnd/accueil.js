@@ -15,6 +15,7 @@ async function createWorks() {
         const titre = document.createElement('figcaption');
         titre.innerText = travail.title;
         figure.appendChild(titre);
+        figure.setAttribute('id','figure'+travail.id);
     });
 
     const galeriePhoto = document.querySelector(".galerie-photo");
@@ -33,8 +34,8 @@ async function createWorks() {
             boutonSuppression.setAttribute('href','#');
             boutonSuppression.classList.add("bouton-suppression");
             boutonSuppression.setAttribute('id',travail.id);
-            console.log(boutonSuppression.id)
             galerieElement.appendChild(boutonSuppression);
+            const figure = document.getElementById('figure'+travail.id)
             boutonSuppression.addEventListener('click', function(e) {
                 e.preventDefault()
                 const token = window.localStorage.getItem("token");
@@ -46,6 +47,8 @@ async function createWorks() {
                     },
                 })
                 galerieElement.innerHTML = ""
+                figure.innerHTML = ""
+
             })
         });
     };
@@ -224,7 +227,7 @@ btnValider.addEventListener('click', async function (e) {
         boutonSuppression.setAttribute('href','#');
         boutonSuppression.classList.add("bouton-suppression");
         galerieElement.appendChild(boutonSuppression);
-        boutonId = reponseJson.id
+        boutonId = reponseJson.id;
         boutonSuppression.addEventListener('click', function(e) {
             e.preventDefault()
             const token = window.localStorage.getItem("token");
@@ -235,8 +238,8 @@ btnValider.addEventListener('click', async function (e) {
                     'Authorization': 'Bearer '+token
                 },
             })
-            galerieElement.innerHTML = ""
-            figure.innerHTML = ""
+            galerieElement.innerHTML = "";
+            figure.innerHTML = "";
         })
 
 
