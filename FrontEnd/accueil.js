@@ -1,9 +1,12 @@
 document.body.onload = createWorks;
 
+//Création des projets dans la galerie principale ainsi que les projets dans la modale grâce à l'API//
 
 async function createWorks() {
     const reponse = await fetch("http://localhost:5678/api/works");
     const travaux = await reponse.json();
+
+    //Création de la galerie principale//
 
     const projetGalerie = document.querySelector(".gallery");
     travaux.forEach(travail => {
@@ -18,17 +21,22 @@ async function createWorks() {
         figure.setAttribute('id','figure'+travail.id);
     });
 
-    const galeriePhoto = document.querySelector(".galerie-photo");
+    //Creation de la galerie dans la modale//
+
+    const galerieModale = document.querySelector(".galerie-modale");
     function affichageGalerie () {
         travaux.forEach(travail => {
             const galerieElement = document.createElement('figure');
-            galeriePhoto.appendChild(galerieElement);
+            galerieModale.appendChild(galerieElement);
             const photo = document.createElement('img');
             photo.src = travail.imageUrl;
             galerieElement.appendChild(photo);
             const photoModifier = document.createElement('a');
             photoModifier.innerHTML = "éditer";
             galerieElement.appendChild(photoModifier);
+
+            //Creation des boutons permettant de supprimer les travaux chargés depuis l'API//
+
             const boutonSuppression = document.createElement('a');
             boutonSuppression.innerHTML = '<i class="fa-solid fa-trash-can fa-xs"></i>';
             boutonSuppression.setAttribute('href','#');
@@ -66,6 +74,8 @@ async function createWorks() {
             figure.appendChild(titre);
         });
     }
+
+    //Boutons de filtres pour les 3 catégories ainsi que le bouton "tous"//
 
     const boutonTous = document.querySelector(".btn-tous");
 
@@ -152,8 +162,31 @@ boutonReturn.addEventListener('click', function(){
     document.querySelector(".galerie-wrapper").style.display = "flex"
     document.querySelector(".ajout-wrapper").style.display = "none";
     document.querySelector(".return-button").style.display = "none";
-    closePreview()
+    resetModaleAjout();
 })
+
+//Affichage du bouton valider fonctionnel//
+
+function affichageBoutonFonctionnel() {
+    document.getElementById("bouton-valider-inactif").style.display = "none";
+    document.getElementById("bouton-valider").style.display = "flex";
+    
+}
+
+//Affichage du bouton valider non-fonctionnel//
+
+function affichageBoutonInactif() {
+    document.getElementById("bouton-valider-inactif").style.display = "flex";
+    document.getElementById("bouton-valider").style.display = "none";
+}
+
+
+function resetModaleAjout() {
+    const titreAReset = document.getElementById('titre');
+    titre.value= "";
+    closePreview();
+    affichageBoutonInactif();
+}
 
 //Bouton permettant d'envoyer le projet à l'API//
 
@@ -165,7 +198,6 @@ btnValider.addEventListener('click', async function (e) {
     const titre = document.getElementById('titre');
     const categorie = document.getElementById('categorie');
     const contenantErreur = document.querySelector(".erreur-container");
-    const maxSize = 4 * 1024 * 1024
     if (image.value === '') { //Erreur si pas d'image//
         contenantErreur.innerHTML = "";
         const msgErreur = document.createElement('p');
@@ -176,11 +208,6 @@ btnValider.addEventListener('click', async function (e) {
         const msgErreur = document.createElement('p');
         contenantErreur.appendChild(msgErreur);
         msgErreur.innerHTML = "Veuillez donner un nom au projet";
-    } if (image.files[0].size > maxSize) {
-        contenantErreur.innerHTML = "";
-        const msgErreur = document.createElement('p');
-        contenantErreur.appendChild(msgErreur);
-        msgErreur.innerHTML = "Image trop volumineuse";
     } else {
         const formData = new FormData();
         formData.append('image', image.files[0]);
@@ -194,14 +221,16 @@ btnValider.addEventListener('click', async function (e) {
             body: formData
         })
         contenantErreur.innerHTML = "";
-        closePreview();
-        
-
+        resetModaleAjout();
         reponseJson = await reponse2.json()
+
+        //Retour à la galerie de la modale//
 
         document.querySelector(".galerie-wrapper").style.display = "flex"
         document.querySelector(".ajout-wrapper").style.display = "none";
         document.querySelector(".return-button").style.display = "none";
+
+        //Creation du projet dans la galerie principale localement (sans recharger la page)//
 
         const projetGalerie = document.querySelector(".gallery");
         const figure = document.createElement('figure');
@@ -213,15 +242,20 @@ btnValider.addEventListener('click', async function (e) {
         titreGalerie.innerText = reponseJson.title;
         figure.appendChild(titreGalerie);
 
-        const galeriePhoto = document.querySelector(".galerie-photo");
+        //Creation du projet dans la galerie de la modale localement (sans recharger la page)//
+
+        const galerieModale = document.querySelector(".galerie-modale");
         const galerieElement = document.createElement('figure');
-        galeriePhoto.appendChild(galerieElement);
+        galerieModale.appendChild(galerieElement);
         const imageNewProject = document.createElement('img');
         imageNewProject.src = reponseJson.imageUrl;
         galerieElement.appendChild(imageNewProject);
         const titreNewProject = document.createElement('figcaption');
         titreNewProject.innerText = 'éditer';
         galerieElement.appendChild(titreNewProject);
+
+        //Creation du bouton de suppression du nouveau projet//
+
         const boutonSuppression = document.createElement('a');
         boutonSuppression.innerHTML = '<i class="fa-solid fa-trash-can fa-xs"></i>';
         boutonSuppression.setAttribute('href','#');
@@ -250,16 +284,26 @@ btnValider.addEventListener('click', async function (e) {
 const imgProjet = document.getElementById('img-projet')
 imgProjet.onchange = evt => {
     const [file] = imgProjet.files
-    if (file) {
+    const maxSize = 4 * 1024 * 1024
+    const contenantErreur = document.querySelector(".erreur-container");
+    if (file.size<=maxSize) { //Si fichier a la bonne taille le bouton devient fonctionnel//
+        affichageBoutonFonctionnel();
         document.getElementById("preview").style.display = "flex"
         preview.src = URL.createObjectURL(file)
         document.querySelector(".fa-image").style.display = "none"
         document.querySelector(".custom-image").style.display = "none"
         document.querySelector(".photo-text").style.display = "none"
+    } else { //Sinon message d'erreur
+        contenantErreur.innerHTML = "";
+        const msgErreur = document.createElement('p');
+        contenantErreur.appendChild(msgErreur);
+        msgErreur.innerHTML = "Image trop volumineuse";
     }
   }
 
 let modal = null
+
+//Fonction d'ouverture de la modale//
 
 const openModal = function (e) {
     e.preventDefault()
@@ -273,6 +317,8 @@ const openModal = function (e) {
     modal.querySelector('.modal-wrapper').addEventListener('click', stopPropagation)
 }
 
+//Fonction de fermeture de la preview de l'image//
+
 const closePreview = function(e) {
     document.getElementById("preview").style.display = "none"
     document.querySelector(".fa-image").style.display = "flex"
@@ -280,18 +326,20 @@ const closePreview = function(e) {
     document.querySelector(".photo-text").style.display = "flex"
 }
 
+//Fonction de fermeture de la modale//
+
 const closeModal = function(e) {
     if (modal === null) return
     e.preventDefault
     modal.style.display = "none"
     modal.removeEventListener('click', closeModal)
     modal.querySelector('.modal-wrapper').removeEventListener('click', stopPropagation)
-    closePreview()
-    modal = null
+    resetModaleAjout();
+    modal = null;
 }
 
 const stopPropagation = function (e) {
-    e.stopPropagation()
+    e.stopPropagation();
 }
 
 const boutonModal = document.querySelector(".js-modal");

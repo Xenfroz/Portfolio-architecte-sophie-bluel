@@ -393,7 +393,7 @@ footer nav ul {
 	font-family: 'Work Sans';
 }
 
-.galerie-photo {
+.galerie-modale {
 	overflow: auto;
 	display: flex;
 	flex-wrap: wrap;
@@ -403,7 +403,7 @@ footer nav ul {
 	border-bottom: 1px solid #B3B3B3 ;
 }
 
-.galerie-photo figure {
+.galerie-modale figure {
 	display: flex;
 	flex-direction: column;
 	gap: 5px;
@@ -503,8 +503,28 @@ footer nav ul {
 }
 
 #bouton-valider {
+	display: none;
 	align-self: center;
 	margin-bottom: 1em;
+}
+
+#bouton-valider-inactif {
+	display: flex;
+	align-self: center;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 1em;
+	height: 36px;
+  	border: none;
+  	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+ 	width: 237px;
+  	margin: 2em 0;
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 1.2em;
+	color: white;
+	background-color: #938b81;
+  	border-radius: 60px;
 }
 
 .return-button {
